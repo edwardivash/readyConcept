@@ -18,6 +18,11 @@ let alphaComponent: CGFloat = 0.2
 
 
 class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
+    
+    lazy var layersDetailVC: LayersDetailVC? = {
+        let layersDetailVC = LayersDetailVC()
+        return layersDetailVC
+    }()
                 
     lazy var buttonsStackView: UIStackView? = {
         let stackView = UIStackView()
@@ -97,6 +102,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
                 
         setupMapView()
         setupSearchBar()
+        setupGestureRecognizerForSearchBar()
         setupButtonStackView()
     }
     
@@ -149,6 +155,13 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
         }
     }
     
+    private func setupGestureRecognizerForSearchBar() {
+        if let mapView = mapView,
+           let srchBar = searchBar {
+            mapView.addGestureRecognizer(UITapGestureRecognizer(target: srchBar, action: #selector(resignFirstResponder)))
+        }
+    }
+    
     // MARK: Target methods
     
     @objc func zoomInOut(_ sender: UIStepper) {
@@ -158,8 +171,13 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
     }
     
     @objc func presentVCWithLayers() {
-        let layersVC = LayersDetailVC()
-        present(layersVC, animated: true, completion: nil)
+        if let layersDetailVCC = layersDetailVC,
+           let mapView = mapView {
+            present(layersDetailVCC, animated: true, completion: nil)
+            layersDetailVCC.styleCompletion = { (style) in
+                mapView.styleURL = style
+            }
+        }
     }
     
     @objc func startNavigation() {

@@ -17,6 +17,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var tableView: UITableView?
     var segmentedControl: UISegmentedControl?
     var dataSource: [LayersModel]?
+    var styleCompletion:((URL) -> Void)?
     var selectedRows = NSMutableIndexSet()
     
     override func viewDidLoad() {
@@ -26,7 +27,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView = UITableView()
         tableView?.register(UINib(nibName: cellNibName, bundle: .main), forCellReuseIdentifier: cellId)
-        selectedRows.add(0)
+        selectedRows.contains(0)
         
         segmentedControl = UISegmentedControl(items: ["Map", "Sattelite"])
         
@@ -50,7 +51,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             segmContr.selectedSegmentIndex = 0
             segmContr.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
             segmContr.selectedSegmentTintColor = UIColor(red: 127 / 255, green: 153 / 255, blue: 173 / 255, alpha: 1)
-//            segmContr.addTarget(self, action: #selector(changeStyle), for: .valueChanged)
+            segmContr.addTarget(self, action: #selector(changeStyle(_:)), for: .valueChanged)
             
             view.addSubview(segmContr)
             NSLayoutConstraint.activate([
@@ -81,7 +82,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-// MARK: Data Source
+    // MARK: Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let dataSource = dataSource {
@@ -101,7 +102,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-// MARK: Delegate
+    // MARK: Delegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! LayersCell
@@ -140,16 +141,17 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         (54.780677, 26.190837),
         (54.779834, 26.194826)
     ].map({ CLLocationCoordinate2D(latitude: $0.1, longitude: $0.0)})
-// MARK: Target Actions
     
-//    @objc func changeStyle(_ sender: UISegmentedControl) {
-//        switch sender.selectedSegmentIndex {
-//        case 0:
-//            mapVC.oneMoreMap.style = MGLStyle.streetsStyleURL
-//        case 1:
-//            mapVC.oneMoreMap.style = MGLStyle.satelliteStyleURL
-//        default:
-//            mapVC.oneMoreMap.style = MGLStyle.streetsStyleURL
-//        }
-//    }
+    // MARK: Target Actions
+    
+    @objc func changeStyle(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            styleCompletion?(MGLStyle.streetsStyleURL)
+        case 1:
+            styleCompletion?(MGLStyle.satelliteStyleURL)
+        default:
+            styleCompletion?(MGLStyle.streetsStyleURL)
+        }
+    }
 }
