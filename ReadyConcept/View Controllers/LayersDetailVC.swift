@@ -11,6 +11,8 @@ import MapboxAnnotationExtension
 
 let cellNibName = "LayersCell"
 let cellId = "LayersId"
+let layerNames = ["Rivers", "Routes", "Shops", "Photos"]
+let segmentedControllItems = ["Map", "Sattelite"]
 
 class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -18,7 +20,7 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var segmentedControl: UISegmentedControl?
     var dataSource: [LayersModel]?
     var styleCompletion:((URL) -> Void)?
-    var selectedRows = NSMutableIndexSet()
+    var selectedLayer:((Int) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +29,18 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView = UITableView()
         tableView?.register(UINib(nibName: cellNibName, bundle: .main), forCellReuseIdentifier: cellId)
-        selectedRows.contains(0)
         
-        segmentedControl = UISegmentedControl(items: ["Map", "Sattelite"])
+        segmentedControl = UISegmentedControl(items: segmentedControllItems)
         
         dataSource = fillDatasource()
         
         setupSegmentedControl()
         setupTableView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateViewConstraints()
     }
     
     override func updateViewConstraints() {
@@ -93,7 +99,6 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func fillDatasource() -> [LayersModel] {
         var resultArray = [LayersModel]()
-        let layerNames = ["Rivers", "Routes", "Shops", "Photos"]
         for layer in layerNames {
             resultArray.append(LayersModel(name: layer, selected: false))
         }
@@ -116,31 +121,14 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let dataSource = dataSource {
             if dataSource[indexPath.row].isSelected == false {
                 dataSource[indexPath.row].isSelected = true
-                selectedRows.add(indexPath.row)
+                selectedLayer?(indexPath.row)
             } else {
                 dataSource[indexPath.row].isSelected = false
-                selectedRows.remove(indexPath.row)
+                selectedLayer?(indexPath.row)
             }
             tableView.reloadData()
         }
     }
-    
-    let viliaCoordinates = [
-        (54.794503, 26.190763),
-        (54.792952, 26.189289),
-        (54.792002, 26.188174),
-        (54.790679, 26.186776),
-        (54.789215, 26.186256),
-        (54.788140, 26.186095),
-        (54.786803, 26.186509),
-        (54.78532,  26.186258),
-        (54.784102, 26.185120),
-        (54.783063, 26.185135),
-        (54.781938, 26.186435),
-        (54.781206, 26.188355),
-        (54.780677, 26.190837),
-        (54.779834, 26.194826)
-    ].map({ CLLocationCoordinate2D(latitude: $0.1, longitude: $0.0)})
     
     // MARK: Target Actions
     

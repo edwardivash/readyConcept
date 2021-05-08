@@ -16,14 +16,30 @@ let stepperStarterValue: Double = 14
 let roundButtonValue: CGFloat = 5
 let alphaComponent: CGFloat = 0.2
 
-
-class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
+class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizerDelegate {
+    
+    var selectedIndexes = Set<Int>()
+    
+    lazy var arrayOfRiverAnnotations:[MGLPointAnnotation] = {
+       let riverAnnotations = MGLPointAnnotation().returnRiverAnnotationsArray()
+       return riverAnnotations
+    }()
+    
+    lazy var routesPolylineAnnotationsArray:[MGLPolyline] = {
+        let polylineRoutesAnnotations = MGLPolyline().returnRoutesPolylineAnnotationsArray()
+        return polylineRoutesAnnotations
+    }()
+    
+    lazy var shopsAnnotationsArray:[MGLPointAnnotation] = {
+       let shopsAnnotations = MGLPointAnnotation().returnShopAnnotationsArray()
+       return shopsAnnotations
+    }()
     
     lazy var layersDetailVC: LayersDetailVC? = {
         let layersDetailVC = LayersDetailVC()
         return layersDetailVC
     }()
-                
+    
     lazy var buttonsStackView: UIStackView? = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +54,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
         let mapView = NavigationMapView(frame: view.bounds, styleURL: MGLStyle.outdoorsStyleURL)
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.showsUserLocation = true
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 54.7, longitude: 26.1), zoomLevel: 8, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: 54.794503, longitude: 26.190763), zoomLevel: 8, animated: false)
         mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
         mapView.compassView.compassVisibility = .hidden
         mapView.delegate = self
@@ -95,18 +111,25 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
         return searchBar
     }()
     
-    // MARK: VC's LifeCycle
+// MARK: VC's LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         setupMapView()
         setupSearchBar()
-        setupGestureRecognizerForSearchBar()
         setupButtonStackView()
+        
+        selectedIndexes.insert(0)
+        
+        layerAnnotationManager()
     }
     
-    // MARK: Customize methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
+    
+// MARK: Customize methods
     
     private func setupMapView() {
         if let mpView = mapView {
@@ -146,7 +169,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
     private func setupSearchBar() {
         if let srchBar = searchBar {
             view.insertSubview(srchBar, aboveSubview: mapView!)
-
+            
             NSLayoutConstraint.activate([
                 srchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 srchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -155,14 +178,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
         }
     }
     
-    private func setupGestureRecognizerForSearchBar() {
-        if let mapView = mapView,
-           let srchBar = searchBar {
-            mapView.addGestureRecognizer(UITapGestureRecognizer(target: srchBar, action: #selector(resignFirstResponder)))
-        }
-    }
-    
-    // MARK: Target methods
+// MARK: Target methods
     
     @objc func zoomInOut(_ sender: UIStepper) {
         if let mapView = mapView {
@@ -187,33 +203,93 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate {
     
 // MARK: MapView Delegate
     
-    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
-        
+    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
+        if selectedIndexes.contains(0) {
+            addRiverAnnotations()
+        }
+    }
+
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
     }
     
-    
-// MARK: Routing methods
-    
-    func drawRoute(route: Route) {
-        
+    func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
+        let camera = MGLMapCamera(lookingAtCenter: annotation.coordinate, altitude: 1000, pitch: 0, heading: 0)
+        mapView.fly(to: camera, completionHandler: nil)
     }
     
-// MARK: Rivers coordinates
+// MARK: Drawing delegate methods
     
-    let viliaCoordinates = [
-        (54.794503, 26.190763),
-        (54.792952, 26.189289),
-        (54.792002, 26.188174),
-        (54.790679, 26.186776),
-        (54.789215, 26.186256),
-        (54.788140, 26.186095),
-        (54.786803, 26.186509),
-        (54.78532,  26.186258),
-        (54.784102, 26.185120),
-        (54.783063, 26.185135),
-        (54.781938, 26.186435),
-        (54.781206, 26.188355),
-        (54.780677, 26.190837),
-        (54.779834, 26.194826)
-    ].map({ CLLocationCoordinate2D(latitude: $0.1, longitude: $0.0)})
+    func mapView(_ mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
+        return 0.6
+    }
+
+    func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
+        return .red
+    }
+
+    func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
+        return 5.0
+    }
+        
+
+// MARK: Add annotations methods
+    
+    func addRiverAnnotations() {
+        if let mapView = mapView {
+            mapView.addAnnotations(arrayOfRiverAnnotations)
+        }
+    }
+    
+    func addRiverRoutesAnnotations() {
+        if let mapView = mapView {
+            mapView.addAnnotations(routesPolylineAnnotationsArray)
+        }
+    }
+    
+    func addShopAnnotations() {
+        if let mapView = mapView {
+            mapView.addAnnotations(shopsAnnotationsArray)
+        }
+    }
+    
+// MARK: Layer Annotation Manager
+    
+    func layerAnnotationManager () {
+        if let detailVC = layersDetailVC,
+           let mapView = mapView {
+            detailVC.selectedLayer = { [unowned self] cellIndex in
+                switch cellIndex {
+                case 0:
+                    if selectedIndexes.contains(cellIndex) {
+                        mapView.removeAnnotations(arrayOfRiverAnnotations)
+                        selectedIndexes.remove(cellIndex)
+                    } else {
+                        self.addRiverAnnotations()
+                        selectedIndexes.insert(cellIndex)
+                    }
+                case 1:
+                    if selectedIndexes.contains(cellIndex) {
+                        mapView.removeAnnotations(routesPolylineAnnotationsArray)
+                        selectedIndexes.remove(cellIndex)
+                    } else {
+                        addRiverRoutesAnnotations()
+                        selectedIndexes.insert(cellIndex)
+                    }
+                case 2:
+                    if selectedIndexes.contains(cellIndex) {
+                        mapView.removeAnnotations(shopsAnnotationsArray)
+                        selectedIndexes.remove(cellIndex)
+                    } else {
+                        addShopAnnotations()
+                        selectedIndexes.insert(cellIndex)
+                    }
+                case 3:
+                    print("Photo layer - 3")
+                default:
+                    break
+                }
+            }
+        }
+    }
 }
