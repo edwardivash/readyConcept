@@ -97,6 +97,14 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 0
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! LayersCell
+        if let dataSource = dataSource {
+            cell.configureCell(layer: dataSource[indexPath.row])
+        }
+        return cell
+    }
+    
     private func fillDatasource() -> [LayersModel] {
         var resultArray = [LayersModel]()
         for layer in layerNames {
@@ -108,14 +116,6 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     // MARK: Delegate
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! LayersCell
-        if let dataSource = dataSource {
-            cell.configureCell(layer: dataSource[indexPath.row])
-        }
-        return cell
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let dataSource = dataSource {

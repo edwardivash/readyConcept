@@ -75,4 +75,15 @@ extension MGLPointAnnotation {
         
         return [kayakRentAnnotation1, kayakRentAnnotation2, kayakRentAnnotation3, kayakRentAnnotation4, kayakRentAnnotation5, kayakRentAnnotation6]
     }
+    
+    func returnRoutesAnnotationsArray() -> [MGLPointAnnotation] {
+        let startViliaRouteAnnotation = MGLPointAnnotation()
+        startViliaRouteAnnotation.coordinate = CLLocationCoordinate2D(latitude: 54.795355, longitude: 26.191101)
+        startViliaRouteAnnotation.title = "Starting Vilia route."
+        
+        let startBerezinaRouteAnnotation = MGLPointAnnotation()
+        startBerezinaRouteAnnotation.coordinate = CLLocationCoordinate2D(latitude: 53.664466, longitude: 28.944372)
+        startBerezinaRouteAnnotation.title = "Starting Berezina route."
+        return [startViliaRouteAnnotation, startBerezinaRouteAnnotation]
+    }
 }

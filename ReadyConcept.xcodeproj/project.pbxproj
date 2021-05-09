@@ -19,6 +19,7 @@
 		D7278A932645DFD200E4F201 /* RiversRoutesCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A922645DFD200E4F201 /* RiversRoutesCoordinates.swift */; };
 		D7278A9A2646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A992646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift */; };
 		D7278A9D26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A9C26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift */; };
+		D7278AA52646D8B300E4F201 /* RoutePlannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278AA42646D8B300E4F201 /* RoutePlannerVC.swift */; };
 		D7665234264458F200F2883C /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7665233264458F200F2883C /* NavigationVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		D7278A922645DFD200E4F201 /* RiversRoutesCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiversRoutesCoordinates.swift; sourceTree = "<group>"; };
 		D7278A992646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MGLAnnotationPoint + RiverAnnotationArray.swift"; sourceTree = "<group>"; };
 		D7278A9C26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MGLPolyLine + RiverRoutesAnnotations.swift"; sourceTree = "<group>"; };
+		D7278AA42646D8B300E4F201 /* RoutePlannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerVC.swift; sourceTree = "<group>"; };
 		D7665233264458F200F2883C /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		E262C31E052B943689065A37 /* Pods-ReadyConcept.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadyConcept.release.xcconfig"; path = "Target Support Files/Pods-ReadyConcept/Pods-ReadyConcept.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +121,7 @@
 				D71BCF8F2642B24E00DCEF35 /* MapWithLayersVC.swift */,
 				D71BCF972642DF0100DCEF35 /* LayersDetailVC.swift */,
 				D7665233264458F200F2883C /* NavigationVC.swift */,
+				D7278AA42646D8B300E4F201 /* RoutePlannerVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7665234264458F200F2883C /* NavigationVC.swift in Sources */,
+				D7278AA52646D8B300E4F201 /* RoutePlannerVC.swift in Sources */,
 				D71BCFA12642E4F800DCEF35 /* LayersModel.swift in Sources */,
 				D71BCF912642B24E00DCEF35 /* MapWithLayersVC.swift in Sources */,
 				D71BCF7A26428EB300DCEF35 /* AppDelegate.swift in Sources */,

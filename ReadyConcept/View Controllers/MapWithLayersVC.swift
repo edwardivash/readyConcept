@@ -15,8 +15,12 @@ let maximumZoomLevel: Double = 24
 let stepperStarterValue: Double = 14
 let roundButtonValue: CGFloat = 5
 let alphaComponent: CGFloat = 0.2
+let navigationButtonImg = "navigation"
+let layerButtonImg = "sheets"
+let routeButtonImg = "pencil"
+let searchbarPlaceholder = "Search what you want..."
 
-class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizerDelegate {
+class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerDelegate {
     
     var selectedIndexes = Set<Int>()
     
@@ -30,6 +34,11 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
         return polylineRoutesAnnotations
     }()
     
+    lazy var routesAnnotations:[MGLPointAnnotation] = {
+        let routesAnnotations = MGLPointAnnotation().returnRoutesAnnotationsArray()
+        return routesAnnotations
+    }()
+    
     lazy var shopsAnnotationsArray:[MGLPointAnnotation] = {
        let shopsAnnotations = MGLPointAnnotation().returnShopAnnotationsArray()
        return shopsAnnotations
@@ -38,6 +47,16 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
     lazy var layersDetailVC: LayersDetailVC? = {
         let layersDetailVC = LayersDetailVC()
         return layersDetailVC
+    }()
+    
+    lazy var routePlannerVC: RoutePlannerVC? = {
+        let routePlannerVC = RoutePlannerVC()
+        return routePlannerVC
+    }()
+    
+    lazy var navigationVC: NavigationVC? = {
+        let navigationVC = NavigationVC()
+        return navigationVC
     }()
     
     lazy var buttonsStackView: UIStackView? = {
@@ -66,7 +85,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
         layerButton.addTarget(self, action: #selector(presentVCWithLayers), for: .touchUpInside)
         layerButton.translatesAutoresizingMaskIntoConstraints = false
         layerButton.backgroundColor = UIColor.white.withAlphaComponent(alphaComponent)
-        layerButton.setImage(UIImage(named: "sheets"), for: .normal)
+        layerButton.setImage(UIImage(named: layerButtonImg), for: .normal)
         layerButton.layer.cornerRadius = roundButtonValue
         return layerButton
     }()
@@ -74,8 +93,9 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
     lazy var routeEditionButton: UIButton? = {
         let routeButton = UIButton()
         routeButton.translatesAutoresizingMaskIntoConstraints = false
+        routeButton.addTarget(self, action: #selector(routePlanner), for: .touchUpInside)
         routeButton.backgroundColor = UIColor.white.withAlphaComponent(alphaComponent)
-        routeButton.setImage(UIImage(named: "pencil"), for: .normal)
+        routeButton.setImage(UIImage(named: routeButtonImg), for: .normal)
         routeButton.layer.cornerRadius = roundButtonValue
         return routeButton
     }()
@@ -97,7 +117,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         locationButton.addTarget(self, action: #selector(startNavigation), for: .touchUpInside)
         locationButton.backgroundColor = UIColor.white.withAlphaComponent(alphaComponent)
-        locationButton.setImage(UIImage(named: "navigation"), for: .normal)
+        locationButton.setImage(UIImage(named: navigationButtonImg), for: .normal)
         locationButton.layer.cornerRadius = roundButtonValue
         return locationButton
     }()
@@ -105,7 +125,7 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
     lazy var searchBar: UISearchBar? = {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "Search what you want..."
+        searchBar.placeholder = searchbarPlaceholder
         searchBar.backgroundColor = .clear
         searchBar.backgroundImage = UIImage()
         return searchBar
@@ -115,6 +135,10 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let nvc = navigationController {
+            nvc.navigationBar.isHidden = true
+        }
         
         setupMapView()
         setupSearchBar()
@@ -197,8 +221,17 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
     }
     
     @objc func startNavigation() {
-        let navigationVC = NavigationVC()
-        present(navigationVC, animated: true, completion: nil)
+        if let navigationVC = navigationVC,
+           let nvc = navigationController {
+            nvc.pushViewController(navigationVC, animated: true)
+        }
+    }
+    
+    @objc func routePlanner() {
+        if let routePlannerVC = routePlannerVC,
+           let nvc = navigationController {
+            nvc.pushViewController(routePlannerVC, animated: true)
+        }
     }
     
 // MARK: MapView Delegate
@@ -241,9 +274,15 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
         }
     }
     
-    func addRiverRoutesAnnotations() {
+    func addRiverRoutesPolylines() {
         if let mapView = mapView {
             mapView.addAnnotations(routesPolylineAnnotationsArray)
+        }
+    }
+    
+    func addRiverRoutesAnnotations() {
+        if let mapView = mapView {
+            mapView.addAnnotations(routesAnnotations)
         }
     }
     
@@ -271,8 +310,10 @@ class MapWithLayersVC: UIViewController, MGLMapViewDelegate, UIGestureRecognizer
                 case 1:
                     if selectedIndexes.contains(cellIndex) {
                         mapView.removeAnnotations(routesPolylineAnnotationsArray)
+                        mapView.removeAnnotations(routesAnnotations)
                         selectedIndexes.remove(cellIndex)
                     } else {
+                        addRiverRoutesPolylines()
                         addRiverRoutesAnnotations()
                         selectedIndexes.insert(cellIndex)
                     }

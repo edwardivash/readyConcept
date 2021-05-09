@@ -20,13 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appearance = UITabBar.appearance()
         appearance.tintColor = UIColor.darkGray
         
+        let nvc = UINavigationController(rootViewController: tabBarController)
+
+        
         let initialVC = MapWithLayersVC()
         initialVC.tabBarItem.image = UIImage(systemName: "map")
         
         tabBarController.viewControllers = [initialVC]
         
         if let window = window {
-            window.rootViewController = tabBarController
+            window.rootViewController = nvc
             window.makeKeyAndVisible()
         }
         
