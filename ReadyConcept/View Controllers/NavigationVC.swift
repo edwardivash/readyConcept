@@ -12,12 +12,17 @@ import MapboxDirections
 
 class NavigationVC: UIViewController {
     
+    var origin = CLLocationCoordinate2D()
+    var destination = CLLocationCoordinate2D()
+    
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityInd = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         activityInd.translatesAutoresizingMaskIntoConstraints = false
         activityInd.startAnimating()
         return activityInd
     }()
+
+// MARK: VC Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +30,15 @@ class NavigationVC: UIViewController {
         setupActivityIndicator()
         view.backgroundColor = .lightGray
         
-        let origin = CLLocationCoordinate2DMake(54.794503, 26.190763)
-        let destination = CLLocationCoordinate2DMake(54.779834, 26.194826)
+        origin = CLLocationCoordinate2DMake(54.794503, 26.190763)
+        destination = CLLocationCoordinate2DMake(54.779834, 26.194826)
+        
+        startNavigating(origin: origin, destination: destination)
+    }
+    
+// MARK: Private methods
+    
+    private func startNavigating(origin: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
         let options = NavigationRouteOptions(coordinates: [origin, destination])
         
         Directions.shared.calculate(options) { [weak self] (session, result) in
@@ -52,7 +64,7 @@ class NavigationVC: UIViewController {
         }
     }
     
-    func setupActivityIndicator() {
+    private func setupActivityIndicator() {
         view.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([

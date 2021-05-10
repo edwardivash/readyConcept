@@ -14,6 +14,19 @@ let cellId = "LayersId"
 let layerNames = ["Rivers", "Routes", "Shops", "Photos"]
 let segmentedControllItems = ["Map", "Sattelite"]
 
+
+extension LayersDetailVC {
+    func fillDatasource() -> [LayersModel] {
+       var resultArray = [LayersModel]()
+       for layer in layerNames {
+           resultArray.append(LayersModel(name: layer, selected: false))
+       }
+       resultArray[0].isSelected = true
+       return resultArray
+   }
+}
+
+
 class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView?
@@ -104,16 +117,6 @@ class LayersDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         return cell
     }
-    
-    private func fillDatasource() -> [LayersModel] {
-        var resultArray = [LayersModel]()
-        for layer in layerNames {
-            resultArray.append(LayersModel(name: layer, selected: false))
-        }
-        resultArray[0].isSelected = true
-        return resultArray
-    }
-    
     
     // MARK: Delegate
     

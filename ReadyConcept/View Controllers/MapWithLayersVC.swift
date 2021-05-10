@@ -80,7 +80,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         let mapView = NavigationMapView(frame: view.bounds, styleURL: MGLStyle.outdoorsStyleURL)
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.showsUserLocation = true
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 54.794503, longitude: 26.190763), zoomLevel: 8, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: 53.893009, longitude: 27.567444), zoomLevel: 8, animated: false)
         mapView.setUserTrackingMode(.follow, animated: true, completionHandler: nil)
         mapView.compassView.compassVisibility = .hidden
         mapView.delegate = self
@@ -254,8 +254,8 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
     }
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-        let camera = MGLMapCamera(lookingAtCenter: annotation.coordinate, altitude: 1000, pitch: 0, heading: 0)
-        mapView.fly(to: camera, completionHandler: nil)
+        let camera = MGLMapCamera(lookingAtCenter: annotation.coordinate, altitude: 4500, pitch: 15, heading: 180)
+        mapView.fly(to: camera, withDuration: 4, peakAltitude: 3000, completionHandler: nil)
     }
     
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
@@ -289,25 +289,25 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
 
 // MARK: Add annotations methods
     
-    func addRiverAnnotations() {
+    private func addRiverAnnotations() {
         if let mapView = mapView {
             mapView.addAnnotations(arrayOfRiverAnnotations)
         }
     }
     
-    func addRiverRoutesPolylines() {
+    private func addRiverRoutesPolylines() {
         if let mapView = mapView {
             mapView.addAnnotations(routesPolylineAnnotationsArray)
         }
     }
     
-    func addRiverRoutesAnnotations() {
+    private func addRiverRoutesAnnotations() {
         if let mapView = mapView {
             mapView.addAnnotations(routesAnnotations)
         }
     }
     
-    func addShopAnnotations() {
+    private func addShopAnnotations() {
         if let mapView = mapView {
             mapView.addAnnotations(shopsAnnotationsArray)
         }
@@ -315,7 +315,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
     
 // MARK: Layer Annotation Manager
     
-    func layerAnnotationManager () {
+    private func layerAnnotationManager () {
         if let detailVC = layersDetailVC,
            let mapView = mapView {
             detailVC.selectedLayer = { [unowned self] cellIndex in

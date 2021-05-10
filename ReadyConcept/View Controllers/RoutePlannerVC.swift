@@ -24,22 +24,22 @@ class RoutePlannerVC: UIViewController {
     
 // MARK: Properties
     
-    lazy var flexibleSpace: UIBarButtonItem = {
+    private lazy var flexibleSpace: UIBarButtonItem = {
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         return flexibleSpace
     }()
     
-    lazy var leftArrow: UIBarButtonItem = {
+    private lazy var leftArrow: UIBarButtonItem = {
         let left = UIBarButtonItem(image: UIImage(named: undoBarbuttonImg), style: .plain, target: self, action: nil)
         return left
     }()
 
-    lazy var rightArrow: UIBarButtonItem = {
+    private lazy var rightArrow: UIBarButtonItem = {
         let rigt = UIBarButtonItem(image: UIImage(named: redoBarbuttonImg), style: .plain, target: self, action: nil)
         return rigt
     }()
     
-    lazy var markerButton: UIButton = {
+    private lazy var markerButton: UIButton = {
        let markerButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         markerButton.setImage(UIImage(named: markerBarbuttonImg), for: .normal)
         markerButton.setImage(UIImage(named: selectedMarkerBarbuttonImg), for: .selected)
@@ -47,7 +47,7 @@ class RoutePlannerVC: UIViewController {
         return markerButton
     }()
 
-    lazy var routeButton: UIButton = {
+    private lazy var routeButton: UIButton = {
         let routeButton = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         routeButton.setImage(UIImage(named: routeBarbuttonImg), for: .normal)
         routeButton.setImage(UIImage(named: selectedRouteBarbuttonImg), for: .selected)
@@ -55,7 +55,7 @@ class RoutePlannerVC: UIViewController {
         return routeButton
     }()
 
-    lazy var routeColorButton: UIBarButtonItem = {
+    private lazy var routeColorButton: UIBarButtonItem = {
         let routeClrBtn = UIBarButtonItem(image: UIImage(named: colorBarbuttonImg), style: .plain, target: self, action: nil)
         routeClrBtn.tintColor = UIColor(red: 0, green: 68 / 255, blue: 100 / 255, alpha: 1)
         return routeClrBtn
@@ -71,7 +71,7 @@ class RoutePlannerVC: UIViewController {
         return mapView
     }()
     
-    lazy var toolBarWithButtons: UIToolbar = {
+    private lazy var toolBarWithButtons: UIToolbar = {
         let toolBarr = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 35))
         toolBarr.translatesAutoresizingMaskIntoConstraints = false
         toolBarr.tintColor = .white

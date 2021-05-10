@@ -23,6 +23,7 @@
 		D7278AB826494BDE00E4F201 /* RiverAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278AB726494BDE00E4F201 /* RiverAnnotationModel.swift */; };
 		D7278ABA26495E2900E4F201 /* ShopAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278AB926495E2900E4F201 /* ShopAnnotationModel.swift */; };
 		D7278ABC26495EDF00E4F201 /* RouteAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278ABB26495EDF00E4F201 /* RouteAnnotationModel.swift */; };
+		D7278AC026498F5B00E4F201 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278ABF26498F5B00E4F201 /* SearchVC.swift */; };
 		D7665234264458F200F2883C /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7665233264458F200F2883C /* NavigationVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		D7278AB726494BDE00E4F201 /* RiverAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiverAnnotationModel.swift; sourceTree = "<group>"; };
 		D7278AB926495E2900E4F201 /* ShopAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopAnnotationModel.swift; sourceTree = "<group>"; };
 		D7278ABB26495EDF00E4F201 /* RouteAnnotationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAnnotationModel.swift; sourceTree = "<group>"; };
+		D7278ABF26498F5B00E4F201 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		D7665233264458F200F2883C /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
 		E262C31E052B943689065A37 /* Pods-ReadyConcept.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReadyConcept.release.xcconfig"; path = "Target Support Files/Pods-ReadyConcept/Pods-ReadyConcept.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +130,7 @@
 				D71BCF972642DF0100DCEF35 /* LayersDetailVC.swift */,
 				D7665233264458F200F2883C /* NavigationVC.swift */,
 				D7278AA42646D8B300E4F201 /* RoutePlannerVC.swift */,
+				D7278ABF26498F5B00E4F201 /* SearchVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				D71BCFA12642E4F800DCEF35 /* LayersModel.swift in Sources */,
 				D71BCF912642B24E00DCEF35 /* MapWithLayersVC.swift in Sources */,
 				D71BCF7A26428EB300DCEF35 /* AppDelegate.swift in Sources */,
+				D7278AC026498F5B00E4F201 /* SearchVC.swift in Sources */,
 				D7278A9A2646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift in Sources */,
 				D7278ABA26495E2900E4F201 /* ShopAnnotationModel.swift in Sources */,
 				D71BCF982642DF0100DCEF35 /* LayersDetailVC.swift in Sources */,
