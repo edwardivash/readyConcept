@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import UIKit
-import Mapbox
-import MapboxAnnotationExtension
 
 class LayersModel: NSObject {
     var layersName: String

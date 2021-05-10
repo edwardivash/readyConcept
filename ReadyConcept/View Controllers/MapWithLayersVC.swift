@@ -19,12 +19,19 @@ let navigationButtonImg = "navigation"
 let layerButtonImg = "sheets"
 let routeButtonImg = "pencil"
 let searchbarPlaceholder = "Search what you want..."
+let riverAnnotationImg = "riverIcon"
+let routeAnnotationImg = "routeIcon"
+let shopAnnotationImg = "shopIcon"
+let riverAnnotationReuseableId = "riverAnnotationId"
+let routeAnnotationReuseableId = "routeAnnotationId"
+let shopAnnotationReuseableId = "shopAnnotationId"
+
 
 class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerDelegate {
     
     var selectedIndexes = Set<Int>()
     
-    lazy var arrayOfRiverAnnotations:[MGLPointAnnotation] = {
+    lazy var arrayOfRiverAnnotations:[RiverAnnotationModel] = {
        let riverAnnotations = MGLPointAnnotation().returnRiverAnnotationsArray()
        return riverAnnotations
     }()
@@ -34,12 +41,12 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return polylineRoutesAnnotations
     }()
     
-    lazy var routesAnnotations:[MGLPointAnnotation] = {
+    lazy var routesAnnotations:[RouteAnnotationModel] = {
         let routesAnnotations = MGLPointAnnotation().returnRoutesAnnotationsArray()
         return routesAnnotations
     }()
     
-    lazy var shopsAnnotationsArray:[MGLPointAnnotation] = {
+    lazy var shopsAnnotationsArray:[ShopAnnotationModel] = {
        let shopsAnnotations = MGLPointAnnotation().returnShopAnnotationsArray()
        return shopsAnnotations
     }()
@@ -251,10 +258,24 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         mapView.fly(to: camera, completionHandler: nil)
     }
     
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        
+        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: "")
+        
+        if annotation.isMember(of: RiverAnnotationModel.self) {
+            annotationImage = MGLAnnotationImage(image: UIImage(named: riverAnnotationImg)!, reuseIdentifier: riverAnnotationReuseableId)
+        } else if annotation.isMember(of: RouteAnnotationModel.self) {
+            annotationImage = MGLAnnotationImage(image: UIImage(named: routeAnnotationImg)!, reuseIdentifier: routeAnnotationReuseableId)
+        } else if annotation.isMember(of: ShopAnnotationModel.self) {
+            annotationImage = MGLAnnotationImage(image: UIImage(named: shopAnnotationImg)!, reuseIdentifier: shopAnnotationReuseableId)
+        }
+        return annotationImage
+    }
+    
 // MARK: Drawing delegate methods
     
     func mapView(_ mapView: MGLMapView, alphaForShapeAnnotation annotation: MGLShape) -> CGFloat {
-        return 0.6
+        return 0.7
     }
 
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
