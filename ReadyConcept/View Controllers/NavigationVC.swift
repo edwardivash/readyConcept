@@ -30,8 +30,8 @@ class NavigationVC: UIViewController {
         setupActivityIndicator()
         view.backgroundColor = .lightGray
         
-        origin = CLLocationCoordinate2DMake(54.794503, 26.190763)
-        destination = CLLocationCoordinate2DMake(54.779834, 26.194826)
+        origin = CLLocationCoordinate2DMake(54.77630192800388, 26.201255321502686)
+        destination = CLLocationCoordinate2DMake(54.771917440410164, 26.24112367630005)
         
         startNavigating(origin: origin, destination: destination)
     }

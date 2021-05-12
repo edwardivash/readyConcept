@@ -46,7 +46,7 @@ extension MGLPointAnnotation {
     
     func returnRoutesAnnotationsArray() -> [RouteAnnotationModel] {
         
-        let startViliaRouteAnnotation = RouteAnnotationModel(coordinate: CLLocationCoordinate2D(latitude: 54.795355, longitude: 26.191101), title: "Starting Vilia route.", subtitle: nil)
+        let startViliaRouteAnnotation = RouteAnnotationModel(coordinate: CLLocationCoordinate2D(latitude: 54.771917440410164, longitude: 26.24112367630005), title: "Starting Vilia route.", subtitle: nil)
         
         let startBerezinaRouteAnnotation = RouteAnnotationModel(coordinate: CLLocationCoordinate2D(latitude: 53.664466, longitude: 28.944372), title: "Starting Berezina route.", subtitle: nil)
 

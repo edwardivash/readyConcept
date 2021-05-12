@@ -16,7 +16,6 @@
 		D71BCF9B2642E2E000DCEF35 /* LayersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71BCF992642E2E000DCEF35 /* LayersCell.swift */; };
 		D71BCF9C2642E2E000DCEF35 /* LayersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D71BCF9A2642E2E000DCEF35 /* LayersCell.xib */; };
 		D71BCFA12642E4F800DCEF35 /* LayersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71BCFA02642E4F800DCEF35 /* LayersModel.swift */; };
-		D7278A932645DFD200E4F201 /* RiversRoutesCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A922645DFD200E4F201 /* RiversRoutesCoordinates.swift */; };
 		D7278A9A2646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A992646897F00E4F201 /* MGLAnnotationPoint + RiverAnnotationArray.swift */; };
 		D7278A9D26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A9C26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift */; };
 		D7278AA52646D8B300E4F201 /* RoutePlannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278AA42646D8B300E4F201 /* RoutePlannerVC.swift */; };
@@ -24,6 +23,7 @@
 		D7278ABA26495E2900E4F201 /* ShopAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278AB926495E2900E4F201 /* ShopAnnotationModel.swift */; };
 		D7278ABC26495EDF00E4F201 /* RouteAnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278ABB26495EDF00E4F201 /* RouteAnnotationModel.swift */; };
 		D7278AC026498F5B00E4F201 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278ABF26498F5B00E4F201 /* SearchVC.swift */; };
+		D7278AC12649AA7400E4F201 /* RiversRoutesCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7278A922645DFD200E4F201 /* RiversRoutesCoordinates.swift */; };
 		D7665234264458F200F2883C /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7665233264458F200F2883C /* NavigationVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -294,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7278AC12649AA7400E4F201 /* RiversRoutesCoordinates.swift in Sources */,
 				D7665234264458F200F2883C /* NavigationVC.swift in Sources */,
 				D7278AA52646D8B300E4F201 /* RoutePlannerVC.swift in Sources */,
 				D7278ABC26495EDF00E4F201 /* RouteAnnotationModel.swift in Sources */,
@@ -307,7 +308,6 @@
 				D71BCF9B2642E2E000DCEF35 /* LayersCell.swift in Sources */,
 				D7278A9D26468EC300E4F201 /* MGLPolyLine + RiverRoutesAnnotations.swift in Sources */,
 				D7278AB826494BDE00E4F201 /* RiverAnnotationModel.swift in Sources */,
-				D7278A932645DFD200E4F201 /* RiversRoutesCoordinates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

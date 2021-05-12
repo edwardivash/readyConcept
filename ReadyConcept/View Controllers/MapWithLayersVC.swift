@@ -29,44 +29,46 @@ let shopAnnotationReuseableId = "shopAnnotationId"
 
 class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerDelegate {
     
+// MARK: Properties
+    
     var selectedIndexes = Set<Int>()
     
-    lazy var arrayOfRiverAnnotations:[RiverAnnotationModel] = {
+    private lazy var arrayOfRiverAnnotations:[RiverAnnotationModel] = {
        let riverAnnotations = MGLPointAnnotation().returnRiverAnnotationsArray()
        return riverAnnotations
     }()
     
-    lazy var routesPolylineAnnotationsArray:[MGLPolyline] = {
+    private lazy var routesPolylineAnnotationsArray:[MGLPolyline] = {
         let polylineRoutesAnnotations = MGLPolyline().returnRoutesPolylineAnnotationsArray()
         return polylineRoutesAnnotations
     }()
     
-    lazy var routesAnnotations:[RouteAnnotationModel] = {
+    private lazy var routesAnnotations:[RouteAnnotationModel] = {
         let routesAnnotations = MGLPointAnnotation().returnRoutesAnnotationsArray()
         return routesAnnotations
     }()
     
-    lazy var shopsAnnotationsArray:[ShopAnnotationModel] = {
+    private lazy var shopsAnnotationsArray:[ShopAnnotationModel] = {
        let shopsAnnotations = MGLPointAnnotation().returnShopAnnotationsArray()
        return shopsAnnotations
     }()
     
-    lazy var layersDetailVC: LayersDetailVC? = {
+    private lazy var layersDetailVC: LayersDetailVC? = {
         let layersDetailVC = LayersDetailVC()
         return layersDetailVC
     }()
     
-    lazy var routePlannerVC: RoutePlannerVC? = {
+    private lazy var routePlannerVC: RoutePlannerVC? = {
         let routePlannerVC = RoutePlannerVC()
         return routePlannerVC
     }()
     
-    lazy var navigationVC: NavigationVC? = {
+    private lazy var navigationVC: NavigationVC? = {
         let navigationVC = NavigationVC()
         return navigationVC
     }()
     
-    lazy var buttonsStackView: UIStackView? = {
+    private lazy var buttonsStackView: UIStackView? = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -76,7 +78,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return stackView
     }()
     
-    lazy var mapView: NavigationMapView? = {
+    private lazy var mapView: NavigationMapView? = {
         let mapView = NavigationMapView(frame: view.bounds, styleURL: MGLStyle.outdoorsStyleURL)
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.showsUserLocation = true
@@ -87,7 +89,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return mapView
     }()
     
-    lazy var layerButton: UIButton? = {
+    private lazy var layerButton: UIButton? = {
         let layerButton = UIButton()
         layerButton.addTarget(self, action: #selector(presentVCWithLayers), for: .touchUpInside)
         layerButton.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +99,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return layerButton
     }()
     
-    lazy var routeEditionButton: UIButton? = {
+    private lazy var routeEditionButton: UIButton? = {
         let routeButton = UIButton()
         routeButton.translatesAutoresizingMaskIntoConstraints = false
         routeButton.addTarget(self, action: #selector(routePlanner), for: .touchUpInside)
@@ -107,7 +109,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return routeButton
     }()
     
-    lazy var stepper: UIStepper? = {
+    private lazy var stepper: UIStepper? = {
         let stepper = UIStepper()
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.autorepeat = true
@@ -119,7 +121,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return stepper
     }()
     
-    lazy var locationButton: UIButton? = {
+    private lazy var locationButton: UIButton? = {
         let locationButton = UIButton()
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         locationButton.addTarget(self, action: #selector(startNavigation), for: .touchUpInside)
@@ -129,7 +131,7 @@ class MapWithLayersVC: UIViewController,MGLMapViewDelegate, UIGestureRecognizerD
         return locationButton
     }()
     
-    lazy var searchBar: UISearchBar? = {
+    private lazy var searchBar: UISearchBar? = {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = searchbarPlaceholder
